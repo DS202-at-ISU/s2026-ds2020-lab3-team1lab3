@@ -160,7 +160,7 @@ statement
 > The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta —
 > who has been destroyed five times and then recovered five times.
 
-### Include the code
+### Include the code.
 
 ``` r
 jocasta_deaths <- deaths %>%
@@ -194,6 +194,6 @@ team.
 
 ## Scott’s Work:
 
-## Chai’s work:
+## Chai’s Work : The data shows that Jocasta dies 5 times and returns 5 times in total. This matches the statement exactly, confirming that she has been destroyed five times and recovered five times
 
 \##Logan’s work:
