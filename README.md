@@ -80,7 +80,6 @@ Avenger suffers.
 library(tidyverse)
 ```
 
-<<<<<<< HEAD
     ## Warning: package 'tidyverse' was built under R version 4.5.3
 
     ## Warning: package 'tidyr' was built under R version 4.5.3
@@ -93,10 +92,6 @@ library(tidyverse)
 
     ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
     ## ✔ dplyr     1.2.0     ✔ readr     2.2.0
-=======
-    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ## ✔ dplyr     1.2.0     ✔ readr     2.1.6
->>>>>>> 0de536464b7d556fdb1fe6bdcd6019f453e96fb0
     ## ✔ forcats   1.0.1     ✔ stringr   1.6.0
     ## ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
     ## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
@@ -109,19 +104,6 @@ library(tidyverse)
 ``` r
 library(readr)
 
-<<<<<<< HEAD
-death <- av %>%
-  pivot_longer(
-    cols = starts_with("Death"),
-    names_to = "Time",
-    values_to = "Death") %>%
-  mutate(
-    Time = parse_number(Time)) %>%
-  filter(Death != "") %>%
-  select(-starts_with("Return"))
-
-return <- av %>%
-=======
 deaths <- av %>%
   pivot_longer(
     cols = starts_with("Death"),
@@ -133,61 +115,10 @@ deaths <- av %>%
   select(-starts_with("Return"))
 
 returns <- av %>%
->>>>>>> 0de536464b7d556fdb1fe6bdcd6019f453e96fb0
   select(Name.Alias, starts_with("Return")) %>%
   pivot_longer(
     cols = starts_with("Return"),
     names_to = "Time",
-<<<<<<< HEAD
-    values_to = "Return") %>%
-  mutate(
-    Time = parse_number(Time)) %>%
-  filter(Return != "")
-
-av2 <- death %>%
-  left_join(
-    return,
-    by = c("Name.Alias", "Time"))
-```
-
-    ## Warning in left_join(., return, by = c("Name.Alias", "Time")): Detected an unexpected many-to-many relationship between `x` and `y`.
-    ## ℹ Row 71 of `x` matches multiple rows in `y`.
-    ## ℹ Row 48 of `y` matches multiple rows in `x`.
-    ## ℹ If a many-to-many relationship is expected, set `relationship =
-    ##   "many-to-many"` to silence this warning.
-
-``` r
-head(av2)
-```
-
-    ## # A tibble: 6 × 14
-    ##   URL                 Name.Alias Appearances Current. Gender Probationary.Introl
-    ##   <chr>               <chr>            <int> <chr>    <chr>  <chr>              
-    ## 1 http://marvel.wiki… "Henry Jo…        1269 YES      MALE   ""                 
-    ## 2 http://marvel.wiki… "Janet va…        1165 YES      FEMALE ""                 
-    ## 3 http://marvel.wiki… "Anthony …        3068 YES      MALE   ""                 
-    ## 4 http://marvel.wiki… "Robert B…        2089 YES      MALE   ""                 
-    ## 5 http://marvel.wiki… "Thor Odi…        2402 YES      MALE   ""                 
-    ## 6 http://marvel.wiki… "Thor Odi…        2402 YES      MALE   ""                 
-    ## # ℹ 8 more variables: Full.Reserve.Avengers.Intro <chr>, Year <int>,
-    ## #   Years.since.joining <int>, Honorary <chr>, Notes <chr>, Time <dbl>,
-    ## #   Death <chr>, Return <chr>
-
-``` r
-avg_deaths <- av2 %>%
-  group_by(Name.Alias) %>%
-  summarise(num_deaths = sum(Death == "YES")) %>%
-  summarise(avg_deaths = mean(num_deaths))
-
-avg_deaths
-```
-
-    ## # A tibble: 1 × 1
-    ##   avg_deaths
-    ##        <dbl>
-    ## 1      0.730
-
-=======
     values_to = "Return"
   ) %>%
   mutate(Time = parse_number(Time)) %>%
@@ -210,7 +141,6 @@ av2 <- deaths %>%
   )
 ```
 
->>>>>>> 0de536464b7d556fdb1fe6bdcd6019f453e96fb0
 On average, an Avenger suffers 0.73 deaths.
 
 ## Individually
@@ -226,21 +156,63 @@ possible.
 
 > Quote the statement you are planning to fact-check.
 
-## Chai’s work: The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta — an android based on Janet van Dyne and built by Ultron — who has been destroyed five times and then recovered five times.
-
 ### Include the code
 
 Make sure to include the code to derive the (numeric) fact for the
 statement
 
-## Chai’s Work
+### Include your answer
 
-### FiveThirtyEight Statement
+Include at least one sentence discussing the result of your
+fact-checking endeavor.
 
-> The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta —
-> who has been destroyed five times and then recovered five times.
+Upload your changes to the repository. Discuss and refine answers as a
+team.
 
-### Include the code
+## Nicole’s Work:
+
+## Scott’s Work:“fans of the comics can expect one current or former member to die every seven months or so, with a permanent death occurring once every 20 months.”
+
+``` r
+# Count total deaths across Death1–Death5 columns
+death_cols <- c("Death1", "Death2", "Death3", "Death4", "Death5")
+
+total_deaths <- sum(av[death_cols] == "YES", na.rm = TRUE)
+
+# Total time ~ 53 years
+total_months <- 53 * 12
+
+# Average months per death
+months_per_death <- total_months / total_deaths
+
+months_per_death
+```
+
+    ## [1] 7.146067
+
+``` r
+# Count permanent deaths
+perm_deaths <- sum(av$Return1 == "NO", na.rm = TRUE)
+
+# Total timeline
+total_months <- 53 * 12
+
+# Average time between permanent deaths
+months_per_perm_death <- total_months / perm_deaths
+
+months_per_perm_death
+```
+
+    ## [1] 27.65217
+
+The average months between deaths is 7.15 which is in line with the
+claims of it being about 7 months. A permanent death is supposed to
+happen every 20 months on average but I am not getting that, I am
+getting 27.65 months which is longer than the stated average. If I had
+to guess it is something I am doing and not the original data analysis
+that is wrong.
+
+## Chai’s work: The data shows that Jocasta dies 5 times and returns 5 times. This matches the statement exactly, confirming that she has been destroyed five times and recovered five times
 
 ``` r
 jocasta_deaths <- deaths %>%
@@ -262,21 +234,6 @@ jocasta_returns
 
     ## [1] 5
 
-### Include your answer
-
-Include at least one sentence discussing the result of your
-fact-checking endeavor.
-
-Upload your changes to the repository. Discuss and refine answers as a
-team.
-
-## Nicole’s Work:
-
-## Scott’s Work:
-
-## Chai’s work:
-
-<<<<<<< HEAD
 \##Logan’s work: “Out of 173 listed Avengers, my analysis found that 69
 had died at least one time after they joined the team.”
 
@@ -353,6 +310,3 @@ dim(atLeastOnce)
 
 This has 69 rows meaning that 69 people have died at least once since
 joining the Avengers. This means that the fact is correct.
-=======
-\##Logan’s work:
->>>>>>> 0de536464b7d556fdb1fe6bdcd6019f453e96fb0
