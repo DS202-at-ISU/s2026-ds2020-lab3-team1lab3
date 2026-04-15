@@ -39,27 +39,27 @@ Based on these datasets calculate the average number of deaths an Avenger suffer
 library(tidyverse)
 library(readr)
 
-death <- av %>%
+deaths <- av %>%
   pivot_longer(
     cols = starts_with("Death"),
     names_to = "Time",
-    values_to = "Death") %>%
-  mutate(
-    Time = parse_number(Time)) %>%
+    values_to = "Death"
+  ) %>%
+  mutate(Time = parse_number(Time)) %>%
   filter(Death != "") %>%
   select(-starts_with("Return"))
 
-return <- av %>%
+returns <- av %>%
   select(Name.Alias, starts_with("Return")) %>%
   pivot_longer(
     cols = starts_with("Return"),
     names_to = "Time",
-    values_to = "Return") %>%
-  mutate(
-    Time = parse_number(Time)) %>%
+    values_to = "Return"
+  ) %>%
+  mutate(Time = parse_number(Time)) %>%
   filter(Return != "")
 
-av2 <- death %>%
+av2 <- deaths %>%
   left_join(
     return,
     by = c("Name.Alias", "Time"))
@@ -68,7 +68,8 @@ head(av2)
 ```
 
 ```{r}
-avg_deaths <- av2 %>%
+avg_deaths <- deaths %>%
+  mutate(Death = toupper(Death)) %>%
   group_by(Name.Alias) %>%
   summarise(num_deaths = sum(Death == "YES")) %>%
   summarise(avg_deaths = mean(num_deaths))
@@ -88,6 +89,8 @@ Each team member picks one of the statements in the FiveThirtyEight [analysis](h
 ### FiveThirtyEight Statement
 
 > Quote the statement you are planning to fact-check.
+
+## Chai's work: The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta — an android based on Janet van Dyne and built by Ultron — who has been destroyed five times and then recovered five times.
 
 ### Include the code
 
