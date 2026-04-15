@@ -100,7 +100,7 @@ Make sure to include the code to derive the (numeric) fact for the statement
 ### FiveThirtyEight Statement
 > The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta — who has been destroyed five times and then recovered five times.
 
-### Include the code
+### Include the code.
 
 ```{r}
 jocasta_deaths <- deaths %>%
