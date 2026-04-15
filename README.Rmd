@@ -101,7 +101,35 @@ Upload your changes to the repository. Discuss and refine answers as a team.
 
 ## Nicole's Work:
 
-## Scott's Work:
+## Scott's Work:"fans of the comics can expect one current or former member to die every seven months or so, with a permanent death occurring once every 20 months."
+
+```{r}
+# Count total deaths across Death1–Death5 columns
+death_cols <- c("Death1", "Death2", "Death3", "Death4", "Death5")
+
+total_deaths <- sum(av[death_cols] == "YES", na.rm = TRUE)
+
+# Total time ~ 53 years
+total_months <- 53 * 12
+
+# Average months per death
+months_per_death <- total_months / total_deaths
+
+months_per_death
+
+
+# Count permanent deaths
+perm_deaths <- sum(av$Return1 == "NO", na.rm = TRUE)
+
+# Total timeline
+total_months <- 53 * 12
+
+# Average time between permanent deaths
+months_per_perm_death <- total_months / perm_deaths
+
+months_per_perm_death
+```
+The average months between deaths is 7.15 which is in line with the claims of it being about 7 months. A permanent death is supposed to happen every 20 months on average but I am not getting that, I am getting 27.65 months which is longer than the stated average. If I had to guess it is something I am doing and not the original data analysis that is wrong.
 
 ## Chai's work: 
 
