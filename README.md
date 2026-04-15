@@ -146,6 +146,8 @@ possible.
 
 > Quote the statement you are planning to fact-check.
 
+## Chai’s work: The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta — an android based on Janet van Dyne and built by Ultron — who has been destroyed five times and then recovered five times.
+
 ### Include the code
 
 Make sure to include the code to derive the (numeric) fact for the
@@ -224,19 +226,7 @@ jocasta_returns
 
     ## [1] 5
 
-### Include your answer
-
-Include at least one sentence discussing the result of your
-fact-checking endeavor.
-
-Upload your changes to the repository. Discuss and refine answers as a
-team.
-
 ## Nicole’s Work:
-
-## Scott’s Work:
-
-## Chai’s Work : The data shows that Jocasta dies 5 times and returns 5 times in total. This matches the statement exactly, confirming that she has been destroyed five times and recovered five times
 
 \##Logan’s work: “Out of 173 listed Avengers, my analysis found that 69
 had died at least one time after they joined the team.”
