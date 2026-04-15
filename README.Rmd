@@ -61,20 +61,19 @@ returns <- av %>%
 
 av2 <- deaths %>%
   left_join(
-    return,
-    by = c("Name.Alias", "Time"))
-
-head(av2)
+    returns,
+    by = c("Name.Alias", "Time"),
+    relationship = "many-to-many"
+  )
 ```
 
 ```{r}
-avg_deaths <- deaths %>%
-  mutate(Death = toupper(Death)) %>%
-  group_by(Name.Alias) %>%
-  summarise(num_deaths = sum(Death == "YES")) %>%
-  summarise(avg_deaths = mean(num_deaths))
-
-avg_deaths
+av2 <- deaths %>%
+  left_join(
+    returns,
+    by = c("Name.Alias", "Time"),
+    relationship = "many-to-many"
+  )
 ```
 
 On average, an Avenger suffers 0.73 deaths. 
