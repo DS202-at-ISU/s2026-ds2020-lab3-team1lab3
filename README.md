@@ -153,6 +153,35 @@ possible.
 Make sure to include the code to derive the (numeric) fact for the
 statement
 
+## Chai’s Work
+
+### FiveThirtyEight Statement
+
+> The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta —
+> who has been destroyed five times and then recovered five times.
+
+### Include the code
+
+``` r
+jocasta_deaths <- deaths %>%
+  filter(str_detect(Name.Alias, "Jocasta"), toupper(Death) == "YES") %>%
+  nrow()
+
+jocasta_returns <- returns %>%
+  filter(str_detect(Name.Alias, "Jocasta"), toupper(Return) == "YES") %>%
+  nrow()
+
+jocasta_deaths
+```
+
+    ## [1] 5
+
+``` r
+jocasta_returns
+```
+
+    ## [1] 5
+
 ### Include your answer
 
 Include at least one sentence discussing the result of your
