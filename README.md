@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/LEAcVKPz)
 
 <!-- README.md is generated from README.Rmd. Please edit the README.Rmd file -->
 
@@ -77,6 +76,63 @@ Similarly, deal with the returns of characters.
 Based on these datasets calculate the average number of deaths an
 Avenger suffers.
 
+``` r
+library(tidyverse)
+```
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.2.0     ✔ readr     2.1.6
+    ## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+    ## ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+    ## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+    ## ✔ purrr     1.2.1     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
+library(readr)
+
+deaths <- av %>%
+  pivot_longer(
+    cols = starts_with("Death"),
+    names_to = "Time",
+    values_to = "Death"
+  ) %>%
+  mutate(Time = parse_number(Time)) %>%
+  filter(Death != "") %>%
+  select(-starts_with("Return"))
+
+returns <- av %>%
+  select(Name.Alias, starts_with("Return")) %>%
+  pivot_longer(
+    cols = starts_with("Return"),
+    names_to = "Time",
+    values_to = "Return"
+  ) %>%
+  mutate(Time = parse_number(Time)) %>%
+  filter(Return != "")
+
+av2 <- deaths %>%
+  left_join(
+    returns,
+    by = c("Name.Alias", "Time"),
+    relationship = "many-to-many"
+  )
+```
+
+``` r
+av2 <- deaths %>%
+  left_join(
+    returns,
+    by = c("Name.Alias", "Time"),
+    relationship = "many-to-many"
+  )
+```
+
+On average, an Avenger suffers 0.73 deaths.
+
 ## Individually
 
 For each team member, copy this part of the report.
@@ -90,10 +146,41 @@ possible.
 
 > Quote the statement you are planning to fact-check.
 
+## Chai’s work: The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta — an android based on Janet van Dyne and built by Ultron — who has been destroyed five times and then recovered five times.
+
 ### Include the code
 
 Make sure to include the code to derive the (numeric) fact for the
 statement
+
+## Chai’s Work
+
+### FiveThirtyEight Statement
+
+> The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta —
+> who has been destroyed five times and then recovered five times.
+
+### Include the code
+
+``` r
+jocasta_deaths <- deaths %>%
+  filter(str_detect(Name.Alias, "Jocasta"), toupper(Death) == "YES") %>%
+  nrow()
+
+jocasta_returns <- returns %>%
+  filter(str_detect(Name.Alias, "Jocasta"), toupper(Return) == "YES") %>%
+  nrow()
+
+jocasta_deaths
+```
+
+    ## [1] 5
+
+``` r
+jocasta_returns
+```
+
+    ## [1] 5
 
 ### Include your answer
 
@@ -102,3 +189,11 @@ fact-checking endeavor.
 
 Upload your changes to the repository. Discuss and refine answers as a
 team.
+
+## Nicole’s Work:
+
+## Scott’s Work:
+
+## Chai’s work:
+
+\##Logan’s work:
