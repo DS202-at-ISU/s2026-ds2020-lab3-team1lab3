@@ -106,3 +106,26 @@ Upload your changes to the repository. Discuss and refine answers as a team.
 ## Chai's work: 
 
 ##Logan's work:
+"Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team."
+
+```{r}
+length(unique(av2$URL))
+```
+There is 173 unique values for avengers so the number is right
+
+```{r}
+deathCounts <- av2 |> group_by(URL, Name.Alias) |> summarise(numDeaths = sum(Death == "YES"))
+deathCounts
+```
+This is the number of deaths each avenger has
+
+```{r}
+atLeastOnce <- deathCounts |> filter(numDeaths > 0)
+atLeastOnce
+```
+This gets all of the avengers that have died at least once (numDeaths != 0)
+
+```{r}
+dim(atLeastOnce)
+```
+This has 69 rows meaning that 69 people have died at least once since joining the Avengers. This means that the fact is correct.
