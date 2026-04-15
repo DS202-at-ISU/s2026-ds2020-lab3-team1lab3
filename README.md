@@ -80,6 +80,7 @@ Avenger suffers.
 library(tidyverse)
 ```
 
+<<<<<<< HEAD
     ## Warning: package 'tidyverse' was built under R version 4.5.3
 
     ## Warning: package 'tidyr' was built under R version 4.5.3
@@ -92,6 +93,10 @@ library(tidyverse)
 
     ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
     ## ✔ dplyr     1.2.0     ✔ readr     2.2.0
+=======
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.2.0     ✔ readr     2.1.6
+>>>>>>> 0de536464b7d556fdb1fe6bdcd6019f453e96fb0
     ## ✔ forcats   1.0.1     ✔ stringr   1.6.0
     ## ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
     ## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
@@ -104,6 +109,7 @@ library(tidyverse)
 ``` r
 library(readr)
 
+<<<<<<< HEAD
 death <- av %>%
   pivot_longer(
     cols = starts_with("Death"),
@@ -115,10 +121,24 @@ death <- av %>%
   select(-starts_with("Return"))
 
 return <- av %>%
+=======
+deaths <- av %>%
+  pivot_longer(
+    cols = starts_with("Death"),
+    names_to = "Time",
+    values_to = "Death"
+  ) %>%
+  mutate(Time = parse_number(Time)) %>%
+  filter(Death != "") %>%
+  select(-starts_with("Return"))
+
+returns <- av %>%
+>>>>>>> 0de536464b7d556fdb1fe6bdcd6019f453e96fb0
   select(Name.Alias, starts_with("Return")) %>%
   pivot_longer(
     cols = starts_with("Return"),
     names_to = "Time",
+<<<<<<< HEAD
     values_to = "Return") %>%
   mutate(
     Time = parse_number(Time)) %>%
@@ -167,6 +187,30 @@ avg_deaths
     ##        <dbl>
     ## 1      0.730
 
+=======
+    values_to = "Return"
+  ) %>%
+  mutate(Time = parse_number(Time)) %>%
+  filter(Return != "")
+
+av2 <- deaths %>%
+  left_join(
+    returns,
+    by = c("Name.Alias", "Time"),
+    relationship = "many-to-many"
+  )
+```
+
+``` r
+av2 <- deaths %>%
+  left_join(
+    returns,
+    by = c("Name.Alias", "Time"),
+    relationship = "many-to-many"
+  )
+```
+
+>>>>>>> 0de536464b7d556fdb1fe6bdcd6019f453e96fb0
 On average, an Avenger suffers 0.73 deaths.
 
 ## Individually
@@ -182,10 +226,41 @@ possible.
 
 > Quote the statement you are planning to fact-check.
 
+## Chai’s work: The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta — an android based on Janet van Dyne and built by Ultron — who has been destroyed five times and then recovered five times.
+
 ### Include the code
 
 Make sure to include the code to derive the (numeric) fact for the
 statement
+
+## Chai’s Work
+
+### FiveThirtyEight Statement
+
+> The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta —
+> who has been destroyed five times and then recovered five times.
+
+### Include the code
+
+``` r
+jocasta_deaths <- deaths %>%
+  filter(str_detect(Name.Alias, "Jocasta"), toupper(Death) == "YES") %>%
+  nrow()
+
+jocasta_returns <- returns %>%
+  filter(str_detect(Name.Alias, "Jocasta"), toupper(Return) == "YES") %>%
+  nrow()
+
+jocasta_deaths
+```
+
+    ## [1] 5
+
+``` r
+jocasta_returns
+```
+
+    ## [1] 5
 
 ### Include your answer
 
@@ -201,6 +276,7 @@ team.
 
 ## Chai’s work:
 
+<<<<<<< HEAD
 \##Logan’s work: “Out of 173 listed Avengers, my analysis found that 69
 had died at least one time after they joined the team.”
 
@@ -277,3 +353,6 @@ dim(atLeastOnce)
 
 This has 69 rows meaning that 69 people have died at least once since
 joining the Avengers. This means that the fact is correct.
+=======
+\##Logan’s work:
+>>>>>>> 0de536464b7d556fdb1fe6bdcd6019f453e96fb0
