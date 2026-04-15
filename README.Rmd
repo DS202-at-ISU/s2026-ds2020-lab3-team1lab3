@@ -89,18 +89,50 @@ Each team member picks one of the statements in the FiveThirtyEight [analysis](h
 
 > Quote the statement you are planning to fact-check.
 
-## Chai's work: The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta — an android based on Janet van Dyne and built by Ultron — who has been destroyed five times and then recovered five times.
 
 ### Include the code
 
 Make sure to include the code to derive the (numeric) fact for the statement
 
-## Chai's Work
+### Include your answer
 
-### FiveThirtyEight Statement
-> The MVP of the Earth-616 Marvel Universe Avengers has to be Jocasta — who has been destroyed five times and then recovered five times.
+Include at least one sentence discussing the result of your fact-checking endeavor.
 
-### Include the code.
+Upload your changes to the repository. Discuss and refine answers as a team.
+
+## Nicole's Work:
+
+## Scott's Work:"fans of the comics can expect one current or former member to die every seven months or so, with a permanent death occurring once every 20 months."
+
+```{r}
+# Count total deaths across Death1–Death5 columns
+death_cols <- c("Death1", "Death2", "Death3", "Death4", "Death5")
+
+total_deaths <- sum(av[death_cols] == "YES", na.rm = TRUE)
+
+# Total time ~ 53 years
+total_months <- 53 * 12
+
+# Average months per death
+months_per_death <- total_months / total_deaths
+
+months_per_death
+
+
+# Count permanent deaths
+perm_deaths <- sum(av$Return1 == "NO", na.rm = TRUE)
+
+# Total timeline
+total_months <- 53 * 12
+
+# Average time between permanent deaths
+months_per_perm_death <- total_months / perm_deaths
+
+months_per_perm_death
+```
+The average months between deaths is 7.15 which is in line with the claims of it being about 7 months. A permanent death is supposed to happen every 20 months on average but I am not getting that, I am getting 27.65 months which is longer than the stated average. If I had to guess it is something I am doing and not the original data analysis that is wrong.
+
+## Chai's work: The data shows that Jocasta dies 5 times and returns 5 times. This matches the statement exactly, confirming that she has been destroyed five times and recovered five times
 
 ```{r}
 jocasta_deaths <- deaths %>%
@@ -115,6 +147,7 @@ jocasta_deaths
 jocasta_returns
 ```
 
+
 ### Include your answer
 
 Include at least one sentence discussing the result of your fact-checking endeavor.
@@ -128,3 +161,26 @@ Upload your changes to the repository. Discuss and refine answers as a team.
 ## Chai's Work : The data shows that Jocasta dies 5 times and returns 5 times in total. This matches the statement exactly, confirming that she has been destroyed five times and recovered five times
 
 ##Logan's work:
+"Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team."
+
+```{r}
+length(unique(av2$URL))
+```
+There is 173 unique values for avengers so the number is right
+
+```{r}
+deathCounts <- av2 |> group_by(URL, Name.Alias) |> summarise(numDeaths = sum(Death == "YES"))
+deathCounts
+```
+This is the number of deaths each avenger has
+
+```{r}
+atLeastOnce <- deathCounts |> filter(numDeaths > 0)
+atLeastOnce
+```
+This gets all of the avengers that have died at least once (numDeaths != 0)
+
+```{r}
+dim(atLeastOnce)
+```
+This has 69 rows meaning that 69 people have died at least once since joining the Avengers. This means that the fact is correct.
